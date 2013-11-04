@@ -1,6 +1,6 @@
 POWPOW v0.0.1
 ======
-A cli to setup crisp clean and organized nodeJS project directories.
+Automated template directory creation
 
 *maintained by [Talon Poole](http://theghostin.me)*
 
@@ -15,21 +15,31 @@ For your ExpressJS websites:
 
 ## Options.
 
-    # powpow [options]
-
-### -n, -\-name | *(required):*
+### powpow init [name] [options]
 
     # powpow -n cool-project-wow
 
-The name of your project. This will become the name of your directory.
+initialize a new project using a powpow template.
 
-### -t, -\-type | *(optional):*
+    powpow init project-name http-server
 
-    # powpow -n your-project-name -t http-server
+### powpow add [name]
+Let the user define their own templates.
+    powpow add my-template
 
-The name of any directory in [`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)
+TODO: add directory selection support.
 
-This option defaults to `http-server`
+### powpow rm [name]
+
+removes a template
+
+    powpow rm my-template
+
+### powpow ls
+
+Lists all stored templates.
+
+    powpow ls
 
 ## Contribute.
 

@@ -29,7 +29,7 @@ program.version("0.0.1")
  * initialize a new project using
  * a powpow template.
  *
- * `powpow init project-name -t http-server`
+ *     powpow init project-name -t http-server
  */
 program
   .command("init [name] [template]")
@@ -79,6 +79,8 @@ program
  * Let the user define their own templates.
  *
  * `powpow add my-template`
+ *
+ * TODO: add directory selection support.
  */
 program
   .command("add [name]")
