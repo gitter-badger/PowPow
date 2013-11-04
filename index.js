@@ -37,4 +37,6 @@ ncp(from, to, function (err) {
     console.log("ERROR");
     console.log(err);
   };
+  console.log("\n\ncd into your new project and run 'npm install' to get its dependencies.");
+  console.log("Then run 'npm start' and your project will be ready to hack.");
 });

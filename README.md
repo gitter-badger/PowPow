@@ -1,4 +1,4 @@
-POWPOW v0.0.2
+POWPOW v0.0.3
 ======
 A cli to setup crisp clean and organized nodeJS project directories.
 
