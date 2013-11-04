@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 /*
- * POWPOW v0.0.1-alpha
- * **Under construction**
+ * POWPOW v0.0.2
  *
  * Copy the correct directory from `/powpow`
  * to the given path or current working directory.
@@ -18,15 +17,15 @@ var ncp = require("ncp").ncp
 
 program
   .version("0.0.1")
-  .usage("-n [name] [options]")
   .option("-n, --name [name]", "REQUIRED - the name of the project")
   .option("-d, --destination [path]", "the desired destination", process.cwd())
   .option("-t, --type [type]", "the type of setup", "http-server")
 
 program.parse(process.argv)
 
-if (!program.args.length) {
-  program.help();
+if (!program.name) {
+  console.log("\n\nmust provide a project name.\nex. 'powpow -n cool-website'\n\n");
+  return false;
 }
 
 var from = path.resolve(powpow + program.type)
