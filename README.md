@@ -1,40 +1,43 @@
-POWPOW v0.0.3
+POWPOW v0.0.1
 ======
 A cli to setup crisp clean and organized nodeJS project directories.
 
 *maintained by [Talon Poole](http://theghostin.me)*
 
-## Go.
+## Quick Start
 sudo if you must:
 
-    npm install powpow -g
+    # npm install powpow -g
 
 For your ExpressJS websites:
 
-    # powpow -n your-project
+    # powpow -n your-project-name
 
 ## Options.
+
+    # powpow [options]
+
 ### -n, -\-name | *(required):*
+
+    # powpow -n cool-project-wow
+
 The name of your project. This will become the name of your directory.
 
 ### -t, -\-type | *(optional):*
 
-Avaialable now.
-* http-server *(default)*
+    # powpow -n your-project-name -t http-server
 
-Available soon.
-* api-server
+The name of any directory in [`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)
 
-### -d, -\-destination | *(optional):*
-The directory to put the project in. This option defaults to the current dirextory.
+This option defaults to `http-server`
 
 ## Contribute.
 
-Have a nice clean starting point directory you use and enjoy? Fork this repo
-add your directory to the [`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow) directory and submit a pull request.
+If you have a directory setup for your projects that
+you frequently copy and paste for re-use add it to the
+[`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)
+directory and submit a pull request! :)
 
-## Else.
-
-### What do the directories look like?
+### What directory setups are currently available?
 
 Look under [`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)

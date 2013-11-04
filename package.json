@@ -1,12 +1,13 @@
 {
   "name": "powpow",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "A cli to setup crisp clean and organized nodeJS project directories.",
   "main": "index.js",
   "dependencies": {
     "ncp": "~0.4.2",
     "commander": "~2.0.0"
   },
+  "preferGlobal": true,
   "bin": {
     "powpow": "index.js"
   },
