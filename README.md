@@ -8,6 +8,7 @@ sudo if you must:
     npm install powpow -g
 
 For your ExpressJS websites:
+
     # powpow -n your-project
 
 ## Options.
@@ -24,3 +25,9 @@ Available soon.
 
 ### -d, -\-destination | *(optional):*
 The directory to put the project in. This option defaults to the current dirextory.
+
+## Else.
+
+### What do the directories look like?
+
+Look under [/powpow](link)
