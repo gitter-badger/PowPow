@@ -30,4 +30,4 @@ The directory to put the project in. This option defaults to the current direxto
 
 ### What do the directories look like?
 
-Look under [/powpow](link)
+Look under [/powpow](https://github.com/LegitTalon/powpow/tree/master/powpow)
