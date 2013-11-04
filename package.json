@@ -1,0 +1,29 @@
+{
+  "name": "powpow",
+  "version": "0.0.1",
+  "description": "The perfect node directory seed.",
+  "main": "index.js",
+  "dependencies": {
+    "ncp": "~0.4.2",
+    "commander": "~2.0.0"
+  },
+  "bin": {
+    "powpow": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LegitTalon/powpow"
+  },
+  "keywords": [
+    "seed",
+    "node",
+    "cli",
+    "directory",
+    "structure"
+  ],
+  "author": "Talon Poole",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LegitTalon/powpow/issues"
+  }
+}
