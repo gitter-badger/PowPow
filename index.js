@@ -29,7 +29,7 @@ var ncp = require("ncp").ncp
     };
 
 
-program.version("0.0.1");
+program.version("0.0.2");
 
 /*
  * ## powpow init [name] [template]
@@ -41,7 +41,7 @@ program.version("0.0.1");
  */
 program
   .command("init [name] [template]")
-  .usage("- takes a template from powpow and places it in the current dir.")
+  .description("initialize a template in the current dir")
   .action(function (name, template) {
     if (!template) {
       template = "http-server";
@@ -83,7 +83,7 @@ program
  */
 program
   .command("add [name] [dir]")
-  .usage("- must be run at the root of the dir you want to make a template or a valid path to your template directory should be provided.")
+  .description("add a template to powpow")
   .action(function (name, dir) {
 
     var to = path.resolve(powpow + name)
@@ -107,7 +107,11 @@ program
           err.message
         ]);
       }
-
+      if (!fs.existsSync(path.resolve(powpow, name))) {
+        warn([
+          "Operation failed. Try using sudo."
+        ]);
+      }
       inform([
         "Your template '" + name + "' was created.",
         "You may now use 'powpow init [name] " + name + "'"
@@ -124,9 +128,9 @@ program
  */
 program
   .command("rm [name]")
-  .usage("- removes the template matching the provided name. Requires -f or --force.")
+  .description("remove a template from powpow. Must use -f or --force")
   .option("-f, --force", "force this operation to complete.")
-  .action(function (name) {
+  .action(function (name, program) {
 
     var rm = function(path) {
       if(fs.existsSync(path)) {
@@ -151,8 +155,14 @@ program
       }
     };
 
+    console.log(program.force);
     if (program.force) {
       rm(path.resolve(powpow, name));
+      if (fs.existsSync(path.resolve(powpow, name))) {
+        warn([
+          "Operation failed. Try using sudo."
+        ]);
+      }
     } else {
       warn([
         "You must use -f or --force to complete this operation.",
@@ -170,7 +180,7 @@ program
  */
 program
   .command("ls")
-  .usage("- lists all the templates stored in powpow.")
+  .description("lists all the templates stored in powpow.")
   .action(function () {
     inform([
       "A list of templates you currently have stored.",
