@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// jshint laxcomma: true
+
 /*
  * POWPOW v0.0.1
  *
@@ -13,7 +15,7 @@ var ncp = require("ncp").ncp
   , inform = function (info) {
       console.log("\n### POWPOW INFO ###");
       info.forEach(function (info) {
-        console.log(info)
+        console.log(info);
       });
       console.log("###################\n");
     }
@@ -21,7 +23,7 @@ var ncp = require("ncp").ncp
   , warn = function (warn) {
       console.log("\n### POWPOW WARNING ###");
       warn.forEach(function (warn) {
-        console.log(warn)
+        console.log(warn);
       });
       console.log("###################\n");
     };
@@ -60,7 +62,7 @@ program
         warn([
           err.message
         ]);
-      };
+      }
 
       inform([
         "Type 'cd " + name + " and start hacking.'"
@@ -104,7 +106,7 @@ program
         warn([
           err.message
         ]);
-      };
+      }
 
       inform([
         "Your template '" + name + "' was created.",
@@ -126,11 +128,11 @@ program
   .option("-f, --force", "force this operation to complete.")
   .action(function (name) {
 
-    rm = function(path, cb) {
+    var rm = function(path) {
       if(fs.existsSync(path)) {
 
-        files = fs.readdirSync(path);
-        files.forEach(function(file, index){
+        var files = fs.readdirSync(path);
+        files.forEach(function(file){
           var curPath = path + "/" + file;
           if(fs.statSync(curPath).isDirectory()) { // recurse
             rm(curPath);
@@ -181,10 +183,10 @@ program
         warn([
           err.message
         ]);
-      };
+      }
 
       files.forEach(function (files) {
-        console.log(files)
+        console.log(files);
       });
       console.log("");
     });

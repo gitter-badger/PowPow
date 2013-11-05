@@ -1,7 +1,7 @@
 {
   "name": "powpow",
   "version": "0.0.1",
-  "description": "utomated template directory creation",
+  "description": "Automated template directory creation",
   "main": "index.js",
   "dependencies": {
     "ncp": "~0.4.2",

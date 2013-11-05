@@ -40,7 +40,7 @@ Remove a template
 
 But that won't actually work. You have to force it.
 
-    $ powpow rm -f my-template 
+    $ powpow rm -f my-template
 
 ### ls
 
