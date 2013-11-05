@@ -25,7 +25,7 @@ var ncp = require("ncp").ncp
       warn.forEach(function (warn) {
         console.log(warn);
       });
-      console.log("###################\n");
+      console.log("######################\n");
     };
 
 
@@ -102,20 +102,16 @@ program
     }
 
     ncp(from, to, function (err) {
-      if (err) {
-        warn([
-          err.message
-        ]);
-      }
       if (!fs.existsSync(path.resolve(powpow, name))) {
         warn([
           "Operation failed. Try using sudo."
         ]);
+      } else {
+        inform([
+          "Your template '" + name + "' was created.",
+          "You may now use 'powpow init [name] " + name + "'"
+        ]);
       }
-      inform([
-        "Your template '" + name + "' was created.",
-        "You may now use 'powpow init [name] " + name + "'"
-      ]);
     });
   });
 
@@ -145,9 +141,6 @@ program
           }
         });
         fs.rmdirSync(path);
-        inform([
-          "Your template '" + name + "' was deleted."
-        ]);
       } else {
         warn([
           "That template doesn't exist."
@@ -155,12 +148,22 @@ program
       }
     };
 
-    console.log(program.force);
     if (program.force) {
-      rm(path.resolve(powpow, name));
+      try {
+        rm(path.resolve(powpow, name));
+      } catch (e) {
+        warn([
+          "Operation failed. Try using sudo."
+        ]);
+        return;
+      }
       if (fs.existsSync(path.resolve(powpow, name))) {
         warn([
           "Operation failed. Try using sudo."
+        ]);
+      } else {
+        inform([
+          "Your template '" + name + "' was deleted."
         ]);
       }
     } else {
