@@ -11,7 +11,7 @@ Sudo if you must:
 
 For your ExpressJS websites:
 
-    $ powpow -n your-project-name
+    $ powpow your-project-name
 
 ## Options.
 
