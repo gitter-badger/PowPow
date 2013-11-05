@@ -3,7 +3,7 @@
 // jshint laxcomma: true
 
 /*
- * POWPOW v0.0.1
+ * POWPOW
  *
  * Automated template directory creation.
  */
