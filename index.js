@@ -9,134 +9,107 @@ var ncp = require("ncp").ncp
   , program = require("commander")
   , path = require("path")
   , fs = require("fs")
-
-/*
- * Create a reference to the program directory/powpow folder
- * where the template directories are stored.
- */
   , powpow = path.dirname(require.main.filename) + "/powpow/"
+  , inform = function (info) {
+      console.log("\n### POWPOW INFO ###");
+      info.forEach(function (info) {
+        console.log(info)
+      });
+      console.log("###################\n");
+    }
+
+  , warn = function (warn) {
+      console.log("\n### POWPOW WARNING ###");
+      warn.forEach(function (warn) {
+        console.log(warn)
+      });
+      console.log("###################\n");
+    };
+
+
+program.version("0.0.1");
 
 /*
- * Create a reference to the current working directory.
- */
-  , here = process.cwd() + "/";
-
-program.version("0.0.1")
-
-/*
- * ## powpow init [name] [options]
+ * ## powpow init [name] [template]
  *
  * initialize a new project using
  * a powpow template.
  *
- *     powpow init project-name -t http-server
+ *     powpow init project-name http-server
  */
 program
   .command("init [name] [template]")
+  .usage("- takes a template from powpow and places it in the current dir.")
   .action(function (name, template) {
     if (!template) {
       template = "http-server";
     }
-
-    var from = path.resolve(powpow + template)
-    , to = here + name;
-
-    /*
-     * Require name ex. `powpow init project-name`
-     */
     if (!name) {
-      console.log("\n### POWPOW ERROR ###");
-      console.log("must provide a project name.\nex. 'powpow create cool-website'")
-      console.log("\nrun 'powpow -h' for more help.");
-      console.log("####################\n");;
+      warn([
+        "must provide a project name.\nex. 'powpow create cool-website'",
+        "\nrun 'powpow -h' for more help."
+      ]);
       return false;
     }
 
+    var from = path.resolve(powpow + template)
+      , to = path.resolve(process.cwd(), name);
+
     ncp(from, to, function (err) {
       if (err) {
-
-    /*
-     * If there's an error log it.
-     */
-        console.log("\n### POWPOW ERROR ###");
-        console.log(err);
-        console.log("####################\n");
+        warn([
+          err.message
+        ]);
       };
 
-    /*
-     * Provide helpful instructions upon directory completion.
-     */
-      console.log("\n### POWPOW INFO ###");
-      console.log("Type 'cd " + name + " && npm install'");
-      console.log("Then 'npm start' and your project will be ready to hack.");
-      console.log("###################\n");
+      inform([
+        "Type 'cd " + name + " and start hacking.'"
+      ]);
     });
   });
 
 /*
- * ## powpow add [name]
+ * ## powpow add [name] [dir]
  *
  * Let the user define their own templates.
  *
- * `powpow add my-template`
+ *     powpow add my-template
  *
- * TODO: add directory selection support.
+ * or if you're not inside the directory
+ *
+ *     powpow add my-template ../path/to/template
  */
 program
-  .command("add [name]")
-  .action(function (name) {
+  .command("add [name] [dir]")
+  .usage("- must be run at the root of the dir you want to make a template or a valid path to your template directory should be provided.")
+  .action(function (name, dir) {
 
-    var from = process.cwd()
-    , to = path.resolve(powpow + name);
+    var to = path.resolve(powpow + name)
+      , from = process.cwd();
 
-    /*
-     * Require name ex. `powpow add project-name`
-     */
+    if (dir) {
+      from = path.resolve(process.cwd(), dir);
+    }
+
     if (!name) {
-      console.log("\n### POWPOW ERROR ###");
-      console.log("must provide a project name.\nex. 'powpow add template-website'")
-      console.log("\nrun 'powpow -h' for more help.");
-      console.log("####################\n");;
+      warn([
+        "must provide a project name.\nex. 'powpow add template-website'",
+        "\nrun 'powpow -h' for more help."
+      ]);
       return false;
     }
 
     ncp(from, to, function (err) {
       if (err) {
-        console.log("\n### POWPOW ERROR ###");
-        console.log(err);
-        console.log("####################\n");
+        warn([
+          err.message
+        ]);
       };
 
-    /*
-     * Provide helpful instructions upon directory completion.
-     */
-      console.log("\n### POWPOW INFO ###");
-      console.log("Your template " + name + " was created.");
-      console.log("You may now use 'powpow init project-name -t " + name + "'");
-      console.log("###################\n");
-    });
-  });
-
-/*
- * ## powpow ls
- *
- * Lists all stored templates.
- */
-program
-  .command("ls")
-  .action(function () {
-    fs.readdir(powpow, function (err, files) {
-
-      if (err) {
-        console.log("\n### POWPOW ERROR ###");
-        console.log(err);
-        console.log("####################\n");
-      };
-
-
-      for(i in files) {
-        console.log(files[i]);
-      }
+      inform([
+        "Your template '" + name + "' was created.",
+        "You may now use 'powpow init [name] " + name + "'"
+      ]);
     });
   });
 
@@ -145,20 +118,16 @@ program
  *
  * removes a template.
  *
- * `powpow rm my-template`
+ *     powpow rm my-template
  */
 program
   .command("rm [name]")
+  .usage("- removes the template matching the provided name. Requires -f or --force.")
+  .option("-f, --force", "force this operation to complete.")
   .action(function (name) {
 
-    /*
-     * rm is a recursive nodeJS rmdir function
-     * currently sync
-     */
     rm = function(path, cb) {
       if(fs.existsSync(path)) {
-
-        // TODO: PROMPT USER TO ACCEPT.
 
         files = fs.readdirSync(path);
         files.forEach(function(file, index){
@@ -170,18 +139,55 @@ program
           }
         });
         fs.rmdirSync(path);
-        console.log("\n\n### POWPOW INFO ###");
-        console.log("Your template " + name + " was deleted.");
-        console.log("###################");
+        inform([
+          "Your template '" + name + "' was deleted."
+        ]);
       } else {
-        console.log("\n### POWPOW ERROR ###");
-        console.log("That template doesn't exist.");
-        console.log("####################\n");
+        warn([
+          "That template doesn't exist."
+        ]);
       }
     };
 
-    rm(path.resolve(powpow, name));
+    if (program.force) {
+      rm(path.resolve(powpow, name));
+    } else {
+      warn([
+        "You must use -f or --force to complete this operation.",
+        "Ex. 'powpow rm -f my-template'"
+      ]);
+    }
   });
 
+/*
+ * ## powpow ls
+ *
+ * Lists all stored templates.
+ *
+ *     powpow ls
+ */
+program
+  .command("ls")
+  .usage("- lists all the templates stored in powpow.")
+  .action(function () {
+    inform([
+      "A list of templates you currently have stored.",
+      "Use 'powpow rm [name]' to delete",
+      "and 'powpow add [name]' to add"
+    ]);
+    fs.readdir(powpow, function (err, files) {
+
+      if (err) {
+        warn([
+          err.message
+        ]);
+      };
+
+      files.forEach(function (files) {
+        console.log(files)
+      });
+      console.log("");
+    });
+  });
 
 program.parse(process.argv);
