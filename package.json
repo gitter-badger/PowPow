@@ -4,7 +4,6 @@
   "description": "Automated template directory creation",
   "main": "index.js",
   "dependencies": {
-    "ncp": "~0.4.2",
     "commander": "~2.0.0",
     "prompt": "~0.2.11",
     "fs.extra": "~1.2.1",

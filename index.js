@@ -18,7 +18,7 @@ var program = require("commander")
  * Pretty printing for console.log
  */
   , inform = function (info) {
-      console.log(clc.blue.green("\n### POWPOW INFO ###"));
+      console.log(clc.green("\n### POWPOW INFO ###"));
       info.forEach(function (info) {
         console.log(clc.green(info));
       });
@@ -234,3 +234,7 @@ program
   });
 
 program.parse(process.argv);
+
+if (!program.args.length) {
+  program.help();
+}
