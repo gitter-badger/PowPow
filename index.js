@@ -159,32 +159,30 @@ program
   .option("-f, --force", "force this operation to complete.")
   .action(function (name, program) {
 
-    var rm = function(path) {
-      if(fs.existsSync(path)) {
+    var rm = function (path) {
+      fs.exists(path, function (pathExists) {
+        if (!pathExists) {
+          warn([
+              "That template doesn't exist."
+            , "\nUse 'powpow ls' to show existing templates."
+          ]);
+          process.exit(1);
+        }
 
-        var files = fs.readdirSync(path);
-        files.forEach(function(file){
-          var curPath = path + "/" + file;
-          if(fs.statSync(curPath).isDirectory()) { // recurse
-            rm(curPath);
-          } else { // delete file
-            fs.unlinkSync(curPath);
-          }
+        fs.readdir(path, function (err, files){
+          files.forEach(function (file) {
+            var curPath = path + "/" + file;
+            fs.stat(curPath, function (err, stats) {
+              if (stats.isDirectory()) {
+                rm(curPath);
+              } else {
+                fs.unlink(curPath)
+              }
+            });
+          });
+          fs.rmdir(path);
         });
-        fs.rmdirSync(path);
-      } else {
-        warn([
-          "That template doesn't exist."
-        ]);
-        process.exit(1);
-      }
-
-      if (fs.existsSync(path.resolve(powpow, name))) {
-        warn([
-          "Operation failed. Try using sudo."
-        ]);
-        process.exit(1);
-      }
+      });
     };
 
     var property = {
