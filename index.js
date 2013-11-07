@@ -8,6 +8,7 @@
  * Automated template directory creation.
  */
 var program = require("commander")
+  , clc = require("cli-color")
   , prompt = require("prompt")
   , path = require("path")
   , fs = require("fs.extra")
@@ -17,18 +18,18 @@ var program = require("commander")
  * Pretty printing for console.log
  */
   , inform = function (info) {
-      console.log("\n### POWPOW INFO ###");
+      console.log(clc.blue.green("\n### POWPOW INFO ###"));
       info.forEach(function (info) {
-        console.log(info);
+        console.log(clc.green(info));
       });
-      console.log("###################\n");
+      console.log(clc.green("###################\n"));
     }
   , warn = function (warn) {
-      console.log("\n### POWPOW WARNING ###");
+      console.log(clc.red("\n### POWPOW WARNING ###"));
       warn.forEach(function (warn) {
-        console.log(warn);
+        console.log(clc.red(warn));
       });
-      console.log("######################\n");
+      console.log(clc.red("######################\n"));
     };
 
 
