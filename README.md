@@ -1,46 +1,40 @@
 POWPOW
 ======
-Automated template directory creation
+A cli for automated template directory creation.
 
 *maintained by [Talon Poole](http://theghostin.me)*
 
-## Quick Start
-Sudo if you must:
+## Install
 
-    $ npm install powpow -g
+    $ [sudo] npm install powpow -g
 
-For your ExpressJS websites:
+## Usage
 
-    $ powpow your-project-name
-
-## Options.
+**NOTE:** PowPow requires in sudo in certian instances
+because it creates and deletes directories within itself
+and its a global script. All options that possibly require sudo are
+denoted below with `[sudo]` before the command.
 
 ### init [name] [template]
-
-    $ powpow init cool-project-wow
 
 Initialize a new project using a powpow template.
 
     $ powpow init project-name http-server
 
-### add [name] [dir]
+### [sudo] add [name] [dir]
 Define your own templates
 
-    $ powpow add my-template
+    $ [sudo] powpow add my-template
 
 Or if you're not inside the directory
 
-    $ powpow add my-template ../path/to/template
+    $ [sudo] powpow add my-template ../path/to/template
 
-### rm [name]
+### [sudo] rm [name]
 
 Remove a template
 
-    $ powpow rm my-template
-
-But that won't actually work. You have to force it.
-
-    $ powpow rm -f my-template
+    $ [sudo] powpow rm my-template
 
 ### ls
 

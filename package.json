@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "ncp": "~0.4.2",
-    "commander": "~2.0.0"
+    "commander": "~2.0.0",
+    "prompt": "~0.2.11"
   },
   "preferGlobal": true,
   "bin": {

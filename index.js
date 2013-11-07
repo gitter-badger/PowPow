@@ -9,9 +9,14 @@
  */
 var ncp = require("ncp").ncp
   , program = require("commander")
+  , prompt = require("prompt")
   , path = require("path")
   , fs = require("fs")
   , powpow = path.dirname(require.main.filename) + "/powpow/"
+
+/*
+ * Pretty printing for console.log
+ */
   , inform = function (info) {
       console.log("\n### POWPOW INFO ###");
       info.forEach(function (info) {
@@ -19,7 +24,6 @@ var ncp = require("ncp").ncp
       });
       console.log("###################\n");
     }
-
   , warn = function (warn) {
       console.log("\n### POWPOW WARNING ###");
       warn.forEach(function (warn) {
@@ -29,7 +33,7 @@ var ncp = require("ncp").ncp
     };
 
 
-program.version("0.0.2");
+program.version("0.0.3");
 
 /*
  * ## powpow init [name] [template]
@@ -44,17 +48,24 @@ program
   .description("initialize a template in the current dir")
   .action(function (name, template) {
     if (!template) {
-      template = "http-server";
+      warn([
+          "must provide a template name."
+        , "ex. 'powpow create cool-website my-template'"
+        , "run 'powpow ls' to see available templates."
+        , "\nrun 'powpow -h' for more help."
+      ]);
+      process.exit(1);
     }
     if (!name) {
       warn([
-        "must provide a project name.\nex. 'powpow create cool-website'",
-        "\nrun 'powpow -h' for more help."
+          "must provide a project name."
+        , "ex. 'powpow create cool-website'"
+        , "\nrun 'powpow -h' for more help."
       ]);
-      return false;
+      process.exit(1);
     }
 
-    var from = path.resolve(powpow + template)
+    var from = path.resolve(powpow, template)
       , to = path.resolve(process.cwd(), name);
 
     ncp(from, to, function (err) {
@@ -62,24 +73,26 @@ program
         warn([
           err.message
         ]);
+        process.exit(1);
       }
 
       inform([
+        "Template initialized",
         "Type 'cd " + name + " and start hacking.'"
       ]);
     });
   });
 
 /*
- * ## powpow add [name] [dir]
+ * ## [sudo] powpow add [name] [dir]
  *
  * Let the user define their own templates.
  *
- *     powpow add my-template
+ *     [sudo] powpow add my-template
  *
  * or if you're not inside the directory
  *
- *     powpow add my-template ../path/to/template
+ *     [sudo] powpow add my-template ../path/to/template
  */
 program
   .command("add [name] [dir]")
@@ -87,7 +100,14 @@ program
   .action(function (name, dir) {
 
     var to = path.resolve(powpow + name)
-      , from = process.cwd();
+      , from = process.cwd()
+      , property = {
+          name: 'cont',
+          message: 'Override existing template?',
+          validator: /y[es]*|n[o]?/,
+          warning: 'Must respond yes or no',
+          default: 'no'
+        };
 
     if (dir) {
       from = path.resolve(process.cwd(), dir);
@@ -95,28 +115,39 @@ program
 
     if (!name) {
       warn([
-        "must provide a project name.\nex. 'powpow add template-website'",
-        "\nrun 'powpow -h' for more help."
+          "must provide a project name.\nex. 'powpow add template-website'"
+        , "\nrun 'powpow -h' for more help."
       ]);
       return false;
     }
 
-    ncp(from, to, function (err) {
-      if (!fs.existsSync(path.resolve(powpow, name))) {
-        warn([
-          "Operation failed. Try using sudo."
-        ]);
-      } else {
-        inform([
-          "Your template '" + name + "' was created.",
-          "You may now use 'powpow init [name] " + name + "'"
-        ]);
+    prompt.get(property, function (err, res) {
+      if (res.match(/n[o]/)) {
+        process.exit(1);
       }
+      ncp(from, to, function (err) {
+        if (err) {
+          warn([
+            err.message
+          ]);
+          process.exit(1);
+        }
+        if (!fs.existsSync(path.resolve(powpow, name))) {
+          warn([
+            "Operation failed. Try using sudo."
+          ]);
+          process.exit(1);
+        }
+        inform([
+            "Your template '" + name + "' was created."
+          , "You may now use 'powpow init [name] " + name + "'"
+        ]);
+      });
     });
   });
 
 /*
- * ## powpow rm [name]
+ * ## [sudo] powpow rm [name]
  *
  * removes a template.
  *
@@ -145,33 +176,43 @@ program
         warn([
           "That template doesn't exist."
         ]);
+        process.exit(1);
+      }
+
+      if (fs.existsSync(path.resolve(powpow, name))) {
+        warn([
+          "Operation failed. Try using sudo."
+        ]);
+        process.exit(1);
       }
     };
 
-    if (program.force) {
+    var property = {
+      name: 'cont',
+      message: 'are you sure?',
+      validator: /y[es]*|n[o]?/,
+      warning: 'Must respond yes or no',
+      default: 'no'
+    };
+    prompt.start();
+    prompt.get(property, function (err, res) {
+      console.log(res.cont);
+      console.log(res.cont.match(/n[0]/) === null);
+      if (/n[o]/.test(res.cont)) {
+        return false;
+      }
       try {
         rm(path.resolve(powpow, name));
       } catch (e) {
         warn([
           "Operation failed. Try using sudo."
         ]);
-        return;
+        process.exit(1);
       }
-      if (fs.existsSync(path.resolve(powpow, name))) {
-        warn([
-          "Operation failed. Try using sudo."
-        ]);
-      } else {
-        inform([
-          "Your template '" + name + "' was deleted."
-        ]);
-      }
-    } else {
-      warn([
-        "You must use -f or --force to complete this operation.",
-        "Ex. 'powpow rm -f my-template'"
+      inform([
+        "Your template '" + name + "' was deleted."
       ]);
-    }
+    });
   });
 
 /*
