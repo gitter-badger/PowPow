@@ -7,11 +7,10 @@
  *
  * Automated template directory creation.
  */
-var ncp = require("ncp").ncp
-  , program = require("commander")
+var program = require("commander")
   , prompt = require("prompt")
   , path = require("path")
-  , fs = require("fs")
+  , fs = require("fs.extra")
   , powpow = path.dirname(require.main.filename) + "/powpow/"
 
 /*
@@ -70,9 +69,7 @@ program
 
     ncp(from, to, function (err) {
       if (err) {
-        warn([
-          err.message
-        ]);
+        warn([err.message]);
         process.exit(1);
       }
 
@@ -107,6 +104,26 @@ program
           validator: /y[es]*|n[o]?/,
           warning: 'Must respond yes or no',
           default: 'no'
+        }
+      , add = function () {
+          fs.copyRecursive(from, to, function (err) {
+            if (err) {
+              warn([
+                err.message
+              ]);
+              process.exit(1);
+            }
+            if (!fs.existsSync(path.resolve(powpow, name))) {
+              warn([
+                "Operation failed. Try using sudo."
+              ]);
+              process.exit(1);
+            }
+            inform([
+                "Your template '" + name + "' was created."
+              , "You may now use 'powpow init [name] " + name + "'"
+            ]);
+          });
         };
 
     if (dir) {
@@ -118,32 +135,26 @@ program
           "must provide a project name.\nex. 'powpow add template-website'"
         , "\nrun 'powpow -h' for more help."
       ]);
-      return false;
+      process.exit(1);
     }
 
-    prompt.get(property, function (err, res) {
-      if (res.match(/n[o]/)) {
-        process.exit(1);
+    fs.exists(path.resolve(powpow, name), function (pathExists) {
+      if (pathExists) {
+        prompt.start();
+        prompt.get(property, function (err, res) {
+          if (err) {
+            warn([err.message]);
+          }
+          if (/n[o]?/.test(res.cont)) {
+            process.exit(1);
+          }
+          add();
+        });
+      } else {
+        add();
       }
-      ncp(from, to, function (err) {
-        if (err) {
-          warn([
-            err.message
-          ]);
-          process.exit(1);
-        }
-        if (!fs.existsSync(path.resolve(powpow, name))) {
-          warn([
-            "Operation failed. Try using sudo."
-          ]);
-          process.exit(1);
-        }
-        inform([
-            "Your template '" + name + "' was created."
-          , "You may now use 'powpow init [name] " + name + "'"
-        ]);
-      });
     });
+
   });
 
 /*
@@ -159,57 +170,35 @@ program
   .option("-f, --force", "force this operation to complete.")
   .action(function (name, program) {
 
-    var rm = function (path) {
-      fs.exists(path, function (pathExists) {
-        if (!pathExists) {
-          warn([
-              "That template doesn't exist."
-            , "\nUse 'powpow ls' to show existing templates."
-          ]);
-          process.exit(1);
-        }
-
-        fs.readdir(path, function (err, files){
-          files.forEach(function (file) {
-            var curPath = path + "/" + file;
-            fs.stat(curPath, function (err, stats) {
-              if (stats.isDirectory()) {
-                rm(curPath);
-              } else {
-                fs.unlink(curPath)
-              }
-            });
-          });
-          fs.rmdir(path);
-        });
-      });
-    };
-
     var property = {
-      name: 'cont',
-      message: 'are you sure?',
-      validator: /y[es]*|n[o]?/,
-      warning: 'Must respond yes or no',
-      default: 'no'
+        name: 'cont'
+      , message: 'are you sure?'
+      , validator: /y[es]*|n[o]?/
+      , warning: 'Must respond yes or no'
+      , default: 'no'
     };
     prompt.start();
     prompt.get(property, function (err, res) {
-      console.log(res.cont);
-      console.log(res.cont.match(/n[0]/) === null);
-      if (/n[o]/.test(res.cont)) {
-        return false;
-      }
-      try {
-        rm(path.resolve(powpow, name));
-      } catch (e) {
-        warn([
-          "Operation failed. Try using sudo."
-        ]);
+      if (err) {
+        warn([err.message]);
         process.exit(1);
       }
-      inform([
-        "Your template '" + name + "' was deleted."
-      ]);
+      if (/n[o]?/.test(res.cont)) {
+        process.exit(1);
+      }
+      fs.rmrf(path.resolve(powpow, name), function () {
+        if (err) {
+          warn([
+              err.message
+            , "\n Try using sudo."
+          ]);
+        }
+
+        inform([
+          "The template '" + name + "' was removed."
+        ]);
+
+      });
     });
   });
 
@@ -225,16 +214,15 @@ program
   .description("lists all the templates stored in powpow.")
   .action(function () {
     inform([
-      "A list of templates you currently have stored.",
-      "Use 'powpow rm [name]' to delete",
-      "and 'powpow add [name]' to add"
+        "A list of templates you currently have stored."
+      , "Use 'powpow rm [name]' to delete"
+      , "and 'powpow add [name]' to add"
     ]);
     fs.readdir(powpow, function (err, files) {
 
       if (err) {
-        warn([
-          err.message
-        ]);
+        warn([err.message]);
+        process.exit(1);
       }
 
       files.forEach(function (files) {
