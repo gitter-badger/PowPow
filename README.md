@@ -10,7 +10,7 @@ A cli for automated template directory creation.
 
 ## Usage
 
-**NOTE:** PowPow requires sudo in certian instances
+**NOTE:** PowPow requires sudo in certain instances
 because it creates and deletes directories within itself
 and its a global script. All options that possibly require sudo are
 denoted below with `[sudo]` before the command.
