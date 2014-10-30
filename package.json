@@ -24,8 +24,8 @@
     "url": "https://github.com/LegitTalon/powpow/issues"
   },
   "dependencies": {
+    "chalk": "^0.5.1",
     "fstream": "^1.0.2",
-    "lodash": "^2.4.1",
     "nomnom": "^1.8.0",
     "tar": "^1.0.2"
   }

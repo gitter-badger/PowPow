@@ -1,0 +1,39 @@
+{
+  "name": "my_module.js",
+  "version": "0.0.1",
+  "description": "My Module JS is awesome",
+  "main": "build/my_module.min.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "me",
+  "license": "MIT",
+  "dependencies": {
+    "karma-mocha": "^0.1.9",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "browserify-global-shim": "^1.0.0",
+    "chai": "^1.9.2",
+    "gulp": "^3.8.8",
+    "gulp-browserify": "^0.5.0",
+    "gulp-jshint": "^1.8.4",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
+    "karma": "^0.12.24",
+    "karma-bro": "^0.9.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^1.21.4"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-global-shim"
+    ]
+  },
+  "browserify-global-shim": {
+    "jquery": "jQuery"
+  }
+}

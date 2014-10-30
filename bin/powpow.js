@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-var _ = require('lodash');
 var powpow = require('nomnom');
 
 powpow

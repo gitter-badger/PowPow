@@ -1,0 +1,47 @@
+<?php
+/**
+ * My Module and why it's awesome.
+ *
+ * @todo
+ *   - update my_module.info to reflect actual module name
+ *   - update my_module.info content
+ *
+ *   - update this files author
+ *   - update this files description
+ *   - update `my_module_something()` to reflect actual module name
+ *   - update `my_module_something()` to be an appropriately scoped hook
+ *   - update `$module_name` to the correct module name
+ *
+ *   - rename `inc/my_module_js.inc`
+ *   - complete todos in `inc/my_module_js.inc`
+ *
+ *   - rename 'js/src/my_module.js' to reflect actual module
+ *   - update 'js/src/*.js' to provide desired functionality
+ *
+ * @file
+ * @author me
+ */
+
+/**
+ * TODO: Change this to a specific hook.
+ * Implements hook_something().
+ */
+function my_module_something() {
+
+  // Set some module variables.
+  // TODO: Change $module_name
+  $module_name = 'my_module';
+  $module_root = drupal_get_path('module', $module_name);
+
+  // Load the PHP side of the JS functionality.
+  module_load_include('inc', $module_name, 'inc/' . $module_name . '_js');
+
+  // Get the data for the front end JS.
+  $js_data = my_module_get_js_data();
+
+  // Add the data to the Drupal.settings.my_module object.
+  drupal_add_js(array($module_name => $js_data), 'setting');
+  // Add the compiled, minified JS to the page.
+  drupal_add_js($module_root . '/js/build/' . $module_name . '.min.js');
+
+}
