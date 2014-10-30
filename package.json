@@ -1,6 +1,6 @@
 {
   "name": "powpow",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Automated template directory creation",
   "main": "index.js",
   "preferGlobal": true,
