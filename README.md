@@ -1,56 +1,47 @@
-POWPOW
-======
-A cli for automated template directory creation.
+# JSON directory structure
 
-*maintained by [Talon Poole](http://theghostin.me)*
+Strings are file contents objects are directories.
 
-## Install
+{
+  "file-at-root.js": "//this is the\n//root file",
+  "css": {
+    "style.css": "body {text-align: center;}"
+  }
+}
 
-    $ [sudo] npm install powpow -g
+# new
 
-## Usage
+```
+powpow new [template] [path]
+```
 
-**NOTE:** PowPow requires sudo in certain instances
-because it creates and deletes directories within itself
-and its a global script. All options that possibly require sudo are
-denoted below with `[sudo]` before the command.
+Create the specifed directory template at the specified path.
 
-### init [name] [template]
+[path] defaults to the current working directory.
 
-Initialize a new project using a powpow template.
+# add
 
-    $ powpow init project-name http-server
+```
+powpow add [path] [name]
+```
 
-### [sudo] add [name] [dir]
-Define your own templates
+Add a new template to powpow.
 
-    $ [sudo] powpow add my-template
+[path] must be a directory or valid JSON directory format.
+[name] name the template. Defaults to filename.
 
-Or if you're not inside the directory
+# rm
+```
+powpow rm [template]
+```
 
-    $ [sudo] powpow add my-template ../path/to/template
+Remove a template from powpow.
 
-### [sudo] rm [name]
+[name] name of a template.
 
-Remove a template
+# ls
+```
+powpow ls
+```
 
-    $ [sudo] powpow rm my-template
-
-### ls
-
-List all stored templates.
-
-    $ powpow ls
-
-## Contribute.
-
-If you have a directory setup for your projects that
-you frequently copy and paste for re-use add it to the
-[`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)
-directory and submit a pull request! :)
-
-### What directory setups are currently available?
-
-Look under [`/powpow`](https://github.com/LegitTalon/powpow/tree/master/powpow)
-
-Or add your own!
+Lists all templates.
