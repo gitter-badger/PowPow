@@ -1,4 +1,14 @@
-# new
+# PowPow
+
+Template Directory Automation.
+
+PowPow saves directories on your filesystem to be recreated at another time.
+This is ideal for scaffolding out the perfect beginning point to your project
+and saving that for later use!
+
+# How
+
+## new
 
 ```
 powpow new [template] [path]
@@ -8,7 +18,7 @@ Create the specifed directory template at the specified path.
 
 [path] defaults to the current working directory.
 
-# add
+## add
 
 ```
 powpow add [path] [name]
@@ -19,7 +29,7 @@ Add a new template to powpow.
 [path] must be a directory.
 [name] name the template. Defaults to filename.
 
-# rm
+## rm
 ```
 powpow rm [template]
 ```
@@ -28,7 +38,7 @@ Remove a template from powpow.
 
 [name] name of a template.
 
-# ls
+## ls
 ```
 powpow ls
 ```
