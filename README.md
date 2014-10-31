@@ -6,6 +6,10 @@ PowPow saves directories on your filesystem to be recreated at another time.
 This is ideal for scaffolding out the perfect beginning point to your project
 and saving that for later use!
 
+```
+npm install -g powpow
+```
+
 # How
 
 ## new
