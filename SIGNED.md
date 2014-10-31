@@ -3,19 +3,19 @@
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAABAgAGBQJUUwKUAAoJEAfEbvdgavFLknkP/im1nkQcidm2ThUDBBZoPs6i
-lvJeGinGOzhD5G6cdhNo2hbm5Tp58fXQiGRNe31UQ/tlnBMIgZw71lrAlI0zYqo3
-rArG3XCPNeGNCqyopUTsd7A8+8jLVTdBk1hdrQ/LxaO6roR4U0lVecCjmaRHfAbW
-11rGJGM1C2uJKYyfGShqMfQqJP5F2brSmH6qUS7BM6Y3hjLXHO6ff8xiD+VXyyjB
-JvwfBlvRLps8zB0kV+H6HFygF7viWoc0C6HPYA+7HI2M25G+B86u0DZm93G/M/Nq
-m+2lRU+R2j67ufcCA1A6gAhzELkbwVus1XEsSiUAOx9+8WqshEH+QH/vCWDbW5Su
-tw/LFDgGeY46xJsboUfni0bnoG8OaB1BhAooOrYIdm+7hTTXNFYOaKIhF8nDPXke
-Zduqcr0fsHCxGgHvT0V0QmLhmTImcNLSiCBF1bdrtVmuNgbVhoz8Q81VHh9XSjtV
-W+MlgAMf47MZcc9d5Mph9YM3MBimk02Is6JF1gwxFnRKAR7FSTW66v9oiYQQF0jB
-OpyA85j7ynH7a2Doewvpxfausynv3sLmF/VrRcMtx4ZSRk+x0H4WDuDsS3Fkj/Md
-rQF+yQeLmHzqyGWJpSaQIB3mkFjzNNGF8hzNxr4imltv8E++1EIq9Yvgoi2hUNEz
-0SMYxJtlvWQNYnCjk9Ul
-=I5i1
+iQIcBAABAgAGBQJUUwMGAAoJEAfEbvdgavFLJP8P/1FpLMS7/B7UuQ993EXSdznZ
+OxPKtpKJ0RXUsbHUCifR/89qiMcWYytss5tNX0QUCMsoJgBUtMmSKT3X3rOve9jm
+dw2d/UYoZQLH9bpzDk4MHmpBftJd09fyfJIvigShAiKUCHgZ3RS/5pkIJtDNO9+h
+7RQXoGy/EVNsj9HaHrgVdW2GU8hDzXm43VryAAxZ/GMGEsWlZxhff91Ww5pvIfJT
+TzOgR+GTr7WhfOrBbm5Vz18Ixgsx94jUTasErof4qW2TeI+1sj1Ud1OBhS/rvfsH
+E0Yw2p/ocFADmY/wTpk7us2CTyEbGN2XHRH+CS6CmMbk6qJD4scqnQibDFl3uulE
+hTrYx90uLLef7joCC00ajk6C1DM2tMJ+5sGAV1OyaGd8IIUw8VshwEEb/NnMq2Qb
+nnQrSR6t36TqZW+iNiVdt7t0hCd2Amt9zPQjAQZMxRU9MHgJoHXY+6MlhqhXM3TE
+onvZWxgGQfv6jQmaljyuscmjUtaaonLoFx2ODnImqzfG2pNC4N9YAL8Tsvfzs0ai
+CPjuMR3N553ZzhBvqEzQQy2V89WFETocdk1uOOp7u5xAlYDKaAnR7+Zm8cjbDQxS
+gDX3zwDjaMOgTzFJK6A/nhAIFqa7jrJ8M7yYod8Ws1nLL0fCg9PcMmcXn7eRawso
+JqXyBUVJRf75nhBcJ+zx
+=m1ea
 -----END PGP SIGNATURE-----
 
 ```
@@ -62,7 +62,7 @@ size    exec  file                      contents
 141                   meta-test.js      bef5284f5d31b437a9eeae05f68a2485f2eb2e2c4fb047b04e5b4523e22e97f3
 82                my_module.info        d075d4f2806c9ebbc835af85c86d056fb90b48cd645ef498571932cac0fa038e
 1380              my_module.module      861bffef14d3aa6168f1892e45a9b7c28e3e49af75192fa4eec89286efd29350
-617             package.json            90d06b8ae823cbc920b82435713595901dde7a2eca18a2e9063624c18d16eaa9
+617             package.json            fc5fa5cc11161271380e2b11b185d7602bfb896f699fd1dee8fc49e5ca871177
 ```
 
 #### Ignore
